@@ -1,0 +1,39 @@
+#server:
+#  port: 8081
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+  security:
+    oauth2:
+      jwt:
+        issuer-uri: https://api.cargaraage.bitbyte
+        jws-algorithm: RS-256
+        public-key-location: public-key.pub
+
+authorize:
+  modify-groups: group
+  create-groups: group
+  modify-roles: group
+  create-roles: group
+
+hashing-algorithm: MD5
+
+aws:
+  access-key: ${AWS_ACCESS_KEY}
+  secret-key: ${AWS_SECRET_KEY}
+  s3-url: https://s3.us-east-2.amazonaws.com
+  s3-bucket-name: cargaraage
+  s3-folder-name: cars
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+
+#debug: true
