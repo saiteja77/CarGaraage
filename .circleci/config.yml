@@ -31,8 +31,6 @@ jobs:
       - run:
           name: Testing for tag
           command: echo $CIRCLE_BUILD_NUM
-  push-to-dockerhub:
-    steps:
       - run:
           name: Setup VirtualEnv
           command: |
@@ -50,25 +48,3 @@ jobs:
 #  deploy-to-eb:
 #    steps:
 #      - run:
-
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - build:
-          filters:
-            branches:
-              ignore:
-                - readme
-      - push-to-dockerhub:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
-#      - deploy-to-eb:
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: master
