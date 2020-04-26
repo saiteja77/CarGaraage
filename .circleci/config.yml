@@ -63,9 +63,6 @@ jobs:
       TERM: dumb
     steps:
       - checkout
-      - run:
-          name: Build Docker image
-          command: docker build -t $IMAGE_NAME:latest .
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
