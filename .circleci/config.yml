@@ -43,3 +43,10 @@ jobs:
       - checkout:
           path: /tmp
       - run: ls -lart
+
+workflows:
+  version: 2
+  build-master:
+    - build
+    - publish:
+        requires: build
