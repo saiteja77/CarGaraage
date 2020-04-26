@@ -40,7 +40,16 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: ls -lart
+      - setup_remote_docker
+      - run:
+          name: Build Docker Image
+          command: docker build -t bitbyte01/cargaraage:$CIRCLE_BUILD_NUM .
+      - run:
+          name: Docker Hub Login
+          command: echo $DOCKER_PWD | docker login -u $DOCKER_UNAME --password-stdin
+      - run:
+          name: Push to Docker Hub
+          command: docker push bitbyte01/cargaraage:$CIRCLE_BUILD_NUM
 
 workflows:
   version: 2
