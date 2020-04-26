@@ -63,6 +63,7 @@ jobs:
       TERM: dumb
     steps:
       - checkout
+      - setup_remote_docker
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
