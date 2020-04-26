@@ -12,6 +12,7 @@ jobs:
       TERM: dumb
     steps:
       - checkout
+      - run: ls -lart
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
@@ -22,3 +23,6 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
       - run: gradle test
+      - run: |
+          gradle build
+          ls -lart
