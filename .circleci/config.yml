@@ -149,3 +149,13 @@ executors:
             command: |
               ls -l
               ls -l workspace/
+
+workflows:
+  version: 2
+
+  btd:
+    jobs:
+      - build
+      - publish:
+          requires:
+            - build
