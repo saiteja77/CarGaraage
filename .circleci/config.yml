@@ -26,3 +26,7 @@ jobs:
       - run: |
           gradle build
           ls -lart
+      - persist_to_workspace:
+          root: /tmp
+          path: ./
+      run: ls -lart /tmp
