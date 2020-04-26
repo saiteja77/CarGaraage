@@ -39,7 +39,7 @@ jobs:
       TERM: dumb
     steps:
       - attach_workspace:
-          path: .
+          at: .
       - run: ls -lart
 
 workflows:
