@@ -52,34 +52,35 @@
 
 
 
-#version: 2
-#jobs:
-#  build:
-#    docker:
-#      - image: circleci/openjdk:8-jdk
-#      - image: circleci/buildpack-deps:stretch
-#    working_directory: ~/repo
-#    environment:
-#      JVM_OPTS: -Xmx3200m
-#      TERM: dumb
-#    steps:
-#      - checkout
-#      - setup_remote_docker
-#      - restore_cache:
-#          keys:
-#            - v1-dependencies-{{ checksum "build.gradle" }}
-#            - v1-dependencies-
-#      - run: gradle dependencies
-##      - save_cache:
-##          paths:
-##            - ~/.gradle
-##            key: v1-dependencies-{{ checksum "build.gradle" }}
-#      - run:
-#          name: Running Unit Tests
-#          command: gradle test
-#      - run:
-#          name: Building the project
-#          command: gradle build
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: /tmp
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+      - checkout
+      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies-
+      - run: ls -l
+      - run: gradle dependencies
+#      - save_cache:
+#          paths:
+#            - ~/.gradle
+#            key: v1-dependencies-{{ checksum "build.gradle" }}
+      - run:
+          name: Running Unit Tests
+          command: gradle test
+      - run:
+          name: Building the project
+          command: gradle build
+      -run: ls -l
 #      - run:
 #          name: Build Docker Image
 #          command: docker build -t bitbyte01/cargaraage:$CIRCLE_BUILD_NUM .
@@ -96,66 +97,66 @@
 #      - run:
 #          name: Push to Docker Hub
 #          command: docker push bitbyte01/cargaraage:$CIRCLE_BUILD_NUM
-#workflows:
-#  version: 2
-#  build-master:
-#    jobs:
-#      - build:
-#          filters:
-#            branches:
-#              ignore: readme
-#      - publish:
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              ignore: readme
-
-version: 2.1
-
-executors:
-  my-executor:
-    docker:
-      - image: circleci/openjdk:8-jdk
-    working-directory: /tmp
-  jobs:
-    build:
-      exector: my-executor
-      steps:
-        - run: mkdir -p workspace
-        - checkout
-        - restore_cache:
-            keys:
-              - v1-dependencies-{{ checksum "build.gradle" }}
-              - v1-dependencies-
-        - run: gradle dependencies
-        - run:
-            name: Running Unit Tests
-            command: gradle test
-        - run:
-            name: Building the project
-            command: gradle build
-        - run: |
-            cp ./* /tmp/workspace
-            ls -lart /tmp/workspace
-    publish:
-      exector: my-executor
-      steps:
-        - attach_workspace:
-            at: /tmp
-        - setup_remote_docker
-        - run:
-            name: Build Docker Image
-            command: |
-              ls -l
-              ls -l workspace/
-
 workflows:
   version: 2
-
-  btd:
+  build-master:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              ignore: readme
       - publish:
           requires:
             - build
+          filters:
+            branches:
+              ignore: readme
+#
+#version: 2.1
+#
+#executors:
+#  my-executor:
+#    docker:
+#      - image: circleci/openjdk:8-jdk
+#    working-directory: /tmp
+#  jobs:
+#    build:
+#      exector: my-executor
+#      steps:
+#        - run: mkdir -p workspace
+#        - checkout
+#        - restore_cache:
+#            keys:
+#              - v1-dependencies-{{ checksum "build.gradle" }}
+#              - v1-dependencies-
+#        - run: gradle dependencies
+#        - run:
+#            name: Running Unit Tests
+#            command: gradle test
+#        - run:
+#            name: Building the project
+#            command: gradle build
+#        - run: |
+#            cp ./* /tmp/workspace
+#            ls -lart /tmp/workspace
+#    publish:
+#      exector: my-executor
+#      steps:
+#        - attach_workspace:
+#            at: /tmp
+#        - setup_remote_docker
+#        - run:
+#            name: Build Docker Image
+#            command: |
+#              ls -l
+#              ls -l workspace/
+#
+#workflows:
+#  version: 2
+#
+#  btd:
+#    jobs:
+#      - build
+#      - publish:
+#          requires:
+#            - build
