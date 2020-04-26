@@ -59,7 +59,7 @@ workflows:
           filters:
             branches:
               ignore:
-                - *
+                - readme
       - push-to-dockerhub:
           requires:
             - build
