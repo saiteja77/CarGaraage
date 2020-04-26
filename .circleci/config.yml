@@ -28,5 +28,6 @@ jobs:
           ls -lart
       - persist_to_workspace:
           root: /tmp
-          path: ./
+          paths:
+            - ./
       - run: ls -lart /tmp
