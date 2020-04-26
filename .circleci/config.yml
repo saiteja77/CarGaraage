@@ -1,102 +1,57 @@
-# Java Gradle CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
-#version: 2
-#jobs:
-#  build:
-#    docker:
-#      - image: circleci/openjdk:8-jdk
-#    working_directory: ~/repo
-#    environment:
-#      JVM_OPTS: -Xmx3200m
-#      TERM: dumb
-#    steps:
-#      - checkout
-#      - setup_remote_docker
-#      - restore_cache:
-#          keys:
-#            - v1-dependencies-{{ checksum "build.gradle" }}
-#            - v1-dependencies-
-#      - run: gradle dependencies
-#      - save_cache:
-#          paths:
-#            - ~/.gradle
-#          key: v1-dependencies-{{ checksum "build.gradle" }}
-#      - run:
-#          name: Running Unit Tests
-#          command: gradle test
-#      - run:
-#          name: Building the project
-#          command: gradle build
-#      - run:
-#          name: Setup VirtualEnv
-#          command: |
-#            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-#            echo 'export IMAGE_NAME=cargaraage' >> $BASH_ENV
-#      - run:
-#          name: Initializing Docker
-#          command: docker swarm init
-#      - run:
-#          name: Build Docker Image
-#          command: docker build -t bitbyte01/$IMAGE_NAME:$TAG .
-#      - run:
-#          name: Docker Hub Login
-#          command: echo $DOCKER_PWD | docker login -u $DOCKER_UNAME --password-stdin
-#      - run:
-#          name: Push to Docker Hub
-#          command: docker push bitbyte01/$IMAGE_NAME:$TAG
-#  deploy-to-eb:
-#    steps:
-#      - run:
-
-
-
 version: 2
 jobs:
   build:
     docker:
       - image: circleci/openjdk:8-jdk
-      - image: circleci/buildpack-deps:stretch
     working_directory: ~/repo
     environment:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
     steps:
       - checkout
-      - setup_remote_docker
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
             - v1-dependencies-
       - run: gradle dependencies
-#      - save_cache:
-#          paths:
-#            - ~/.gradle
-#            key: v1-dependencies-{{ checksum "build.gradle" }}
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
       - run:
           name: Running Unit Tests
           command: gradle test
       - run:
-          name: Building the project
+          name: Building Jar file
           command: gradle build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  publish:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
+    steps:
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
       - run:
           name: Build Docker Image
           command: docker build -t bitbyte01/cargaraage:$CIRCLE_BUILD_NUM .
-  publish:
-    docker:
-      - image: circleci/buildpack-deps:stretch
-    steps:
-      - setup_remote_docker
       - run:
           name: Docker Hub Login
           command: echo $DOCKER_PWD | docker login -u $DOCKER_UNAME --password-stdin
       - run:
           name: Push to Docker Hub
           command: docker push bitbyte01/cargaraage:$CIRCLE_BUILD_NUM
+
 workflows:
   version: 2
-  build-master:
+  cargaraage-workflow:
     jobs:
       - build:
           filters:
