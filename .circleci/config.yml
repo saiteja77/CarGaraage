@@ -26,12 +26,8 @@ jobs:
       - run: |
           gradle build
           ls -lart
-          mkdir /tmp/build
       - persist_to_workspace:
-          root: /tmp/build
-          paths:
-            - build/*
-      - run: ls -lart /tmp
+          root: .
 
   publish:
     docker:
@@ -42,7 +38,7 @@ jobs:
       TERM: dumb
     steps:
       - attach_workspace:
-          path: /tmp/build
+          path: .
       - run: ls -lart
 
 workflows:
