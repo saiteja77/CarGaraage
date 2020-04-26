@@ -1,9 +1,6 @@
 version: 2
 jobs:
   build:
-#    branches:
-#      only:
-#        - master
     docker:
       - image: circleci/openjdk:8-jdk
     working_directory: ~/repo
@@ -12,7 +9,6 @@ jobs:
       TERM: dumb
     steps:
       - checkout
-      - run: ls -lart
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
@@ -22,10 +18,12 @@ jobs:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-      - run: gradle test
-      - run: |
-          gradle build
-          ls -lart
+      - run:
+          name: Running Unit Tests
+          command: gradle test
+      - run:
+          name: Building Jar file
+          command: gradle build
       - persist_to_workspace:
           root: .
           paths:
@@ -64,4 +62,4 @@ workflows:
             - build
           filters:
             branches:
-              ignore: readme
+              only: master
