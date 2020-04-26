@@ -63,6 +63,7 @@ jobs:
       TERM: dumb
     steps:
       - checkout
+      - setup_remote_docker
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
@@ -75,11 +76,6 @@ jobs:
       - run:
           name: Running Unit Tests
           command: gradle test
-  publish:
-    docker:
-      - image: circleci/openjdk:8-jdk
-    steps:
-      - setup_remote_docker
       - run:
           name: Building the project
           command: gradle build
@@ -91,6 +87,11 @@ jobs:
       - run:
           name: Build Docker Image
           command: docker build -t bitbyte01/$IMAGE_NAME:$TAG .
+  publish:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - setup_remote_docker
       - run:
           name: Docker Hub Login
           command: echo $DOCKER_PWD | docker login -u $DOCKER_UNAME --password-stdin
