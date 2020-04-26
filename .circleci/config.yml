@@ -29,4 +29,4 @@ jobs:
       - persist_to_workspace:
           root: /tmp
           path: ./
-      run: ls -lart /tmp
+      - run: ls -lart /tmp
