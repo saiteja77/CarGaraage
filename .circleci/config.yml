@@ -41,7 +41,7 @@ jobs:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
     steps:
-      - checkout:
+      - attach_workspace:
           path: /tmp/build
       - run: ls -lart
 
