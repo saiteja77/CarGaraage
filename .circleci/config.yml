@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Push to Docker Hub
           command: docker push bitbyte01/cargaraage:$CIRCLE_BUILD_NUM
-  deploy:
+  deploy-aws:
     working_directory: ~/repo
     docker:
       - image: circleci/python:latest
@@ -76,9 +76,9 @@ workflows:
           filters:
             branches:
               only: readme
-      - deploy:
+      - deploy-aws:
           requires:
-            - publish
+            - build
           filters:
             branches:
               only: master
