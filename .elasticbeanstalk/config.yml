@@ -2,7 +2,7 @@ branch-defaults:
   master:
     environment: Cargaraage-env
 environment-defaults:
-  CiComparisonBlog-env:
+  Cargaraage-env:
     branch: null
     repository: null
 global:
