@@ -42,6 +42,10 @@ jobs:
       - run:
           name: Generate Dockerrun.aws.json file
           command: . generatedockerrun.sh
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
       - run:
           name: Build Docker Image
           command: docker build -t bitbyte01/cargaraage:$CIRCLE_BUILD_NUM .
