@@ -1,5 +1,5 @@
 {
-  "AWSEBDockerrunVersion": "2",
+  "AWSEBDockerrunVersion": "1",
   "Image": {
     "Name": "bitbyte01/cargaraage:%CIRCLE_BUILD_NUM%",
     "Update": "true"
