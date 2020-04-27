@@ -1,8 +1,8 @@
 branch-defaults:
   circleci-project-setup:
-    environment: master
+    environment: prod
   master:
-    environment: master
+    environment: prod
 deploy:
   artifact: Dockerrun.aws.json
 environment-defaults:

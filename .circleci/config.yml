@@ -90,4 +90,4 @@ workflows:
             - publish
           filters:
             branches:
-              ignore: readme
+              only: master
