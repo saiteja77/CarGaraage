@@ -75,7 +75,7 @@ workflows:
             - build
           filters:
             branches:
-              only: readme
+              ignore: readme
       - deploy:
           requires:
             - publish
