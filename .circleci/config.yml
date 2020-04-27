@@ -48,6 +48,19 @@ jobs:
       - run:
           name: Push to Docker Hub
           command: docker push bitbyte01/cargaraage:$CIRCLE_BUILD_NUM
+  deploy:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/python:latest
+    steps:
+      - checkout
+      - run:
+          name: Installing deployment dependencies
+          working_directory: /
+          command: 'sudo pip install awsebcli --upgrade'
+      - run:
+          name: Deploying application to Elastic Beanstalk
+          command: eb deploy
 
 workflows:
   version: 2
@@ -60,6 +73,12 @@ workflows:
       - publish:
           requires:
             - build
+          filters:
+            branches:
+              only: readme
+      - deploy:
+          requires:
+            - publish
           filters:
             branches:
               only: master
