@@ -53,15 +53,14 @@ jobs:
     docker:
       - image: circleci/python:latest
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Installing deployment dependencies
-          working_directory: /
           command: 'sudo pip install awsebcli --upgrade'
       - run:
           name: Deploying application to Elastic Beanstalk
-          command: |
-            eb init
-              eb deploy
+          command: eb deploy Dockerrun.aws.json
 
 workflows:
   version: 2
