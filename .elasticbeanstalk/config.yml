@@ -3,6 +3,8 @@ branch-defaults:
     environment: master
   master:
     environment: master
+deploy:
+  artifact: Dockerrun.aws.json
 environment-defaults:
   master:
     branch: null
