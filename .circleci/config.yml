@@ -62,7 +62,7 @@ jobs:
           name: Deploying application to Elastic Beanstalk
           command: |
             ls -l
-            eb deploy Dockerrun.aws.json
+            eb deploy
 
 workflows:
   version: 2
