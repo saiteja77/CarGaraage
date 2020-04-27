@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "bitbyte01/cargaraage:${CIRCLE_BUILD_NUM}",
+    "Name": "bitbyte01/cargaraage",
     "Update": "true"
   },
   "Ports": [
