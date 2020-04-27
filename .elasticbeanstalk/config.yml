@@ -9,7 +9,7 @@ global:
   application_name: cargaraage
   default_ec2_keyname: null
   default_platform: arn:aws:elasticbeanstalk:eu-east-2::platform/Docker running on
-    64bit Amazon Linux/2.12.17
+    64bit Amazon Linux 2/3.0.0
   default_region: eu-west-2
   include_git_submodules: true
   instance_profile: null
