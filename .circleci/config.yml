@@ -53,8 +53,6 @@ jobs:
     docker:
       - image: circleci/python:latest
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Installing deployment dependencies
           working_directory: /
@@ -82,4 +80,4 @@ workflows:
             - publish
           filters:
             branches:
-              only: master
+              ignore: readme
