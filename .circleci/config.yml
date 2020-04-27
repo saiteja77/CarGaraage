@@ -24,6 +24,9 @@ jobs:
       - run:
           name: Building Jar file
           command: gradle build
+      - run:
+          name: Generate Dockerrun.aws.json file
+          command: . generatedockerrun.sh
       - persist_to_workspace:
           root: .
           paths:
@@ -53,8 +56,6 @@ jobs:
     docker:
       - image: circleci/python:latest
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Installing deployment dependencies
           command: 'sudo pip install awsebcli --upgrade'
