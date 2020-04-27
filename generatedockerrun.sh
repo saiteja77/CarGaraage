@@ -1,1 +1,1 @@
-sed -i -- 's@<TAG>@'"$CIRCLE_BUILD_NUM"'@' Dockerrun.aws.jsons
+sed -i -- 's@<TAG>@'"$CIRCLE_BUILD_NUM"'@' Dockerrun.aws.json
