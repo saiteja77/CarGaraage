@@ -40,6 +40,13 @@ jobs:
           at: .
       - setup_remote_docker
       - run:
+          name: Generate Dockerrun.aws.json file
+          command: . generatedockerrun.sh
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+      - run:
           name: Build Docker Image
           command: docker build -t bitbyte01/cargaraage:$CIRCLE_BUILD_NUM .
       - run:
@@ -57,11 +64,12 @@ jobs:
           at: .
       - run:
           name: Installing deployment dependencies
-          working_directory: /
           command: 'sudo pip install awsebcli --upgrade'
       - run:
           name: Deploying application to Elastic Beanstalk
-          command: eb deploy
+          command: |
+            ls -l
+            eb deploy
 
 workflows:
   version: 2
