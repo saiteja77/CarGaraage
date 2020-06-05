@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Testing...'
-        sh '''echo "Running ${MONGO_URI} on ${JENKINS_URL}"
+        sh '''echo "Running ${env.MONGO_URI} on ${JENKINS_URL}"
 gradle clean test
 gradle bootJar
 docker build -t bitbyte01/cargaraage:latest .'''
