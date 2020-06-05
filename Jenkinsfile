@@ -3,10 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        withGradle() {
-          sh 'clean test'
-        }
-
+        echo 'Testing...'
+        sh 'gradle clean test'
       }
     }
 
