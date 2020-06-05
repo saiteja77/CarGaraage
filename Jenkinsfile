@@ -10,5 +10,11 @@ docker build -t bitbyte01/cargaraage:latest .'''
       }
     }
 
+    stage('publish') {
+      steps {
+        sh 'ls -l'
+      }
+    }
+
   }
 }
