@@ -4,7 +4,8 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Testing...'
-        sh '''gradle clean test
+        sh '''echo sh(returnStdout: true, script: \'env\')
+gradle clean test
 gradle bootJar
 docker build -t bitbyte01/cargaraage:latest .'''
       }
