@@ -9,8 +9,7 @@ pipeline {
     stage('build') {
       steps {
         sh '''gradle -v
-ls
-gradle clean test'''
+printenv'''
       }
     }
 
