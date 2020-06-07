@@ -1,10 +1,18 @@
 pipeline {
-    agent { docker { image 'gradle:6.5.0-jdk8' } }
-    stages {
-        stage('build') {
-            steps {
-                sh 'gradle -v'
-            }
-        }
+  agent {
+    docker {
+      image 'gradle:6.5.0-jdk8'
     }
+
+  }
+  stages {
+    stage('build') {
+      steps {
+        sh '''gradle -v
+ls
+gradle clean test'''
+      }
+    }
+
+  }
 }
