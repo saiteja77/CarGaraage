@@ -14,7 +14,7 @@ pipeline {
 
   }
   environment {
-    AWS_ACCESS_KEY = 'AWS_ACCESS_KEY'
+    AWS_ACCESS_KEY = credentials('AWS_ACCESS_KEY')
     AWS_SECRET_KEY = 'AWS_SECRET_KEY'
     MONGO_URI = 'MONGO_URI'
   }
